@@ -1,0 +1,61 @@
+# tcsh - TENEX C Shell
+# inspired from http://rubenschade.com/dotfiles/.tcshrc
+# and from "Using csh & tcsh", O'Reilly
+
+# GENERAL SETUP
+set filec                       # file completion
+set autolist ambiguous          # show choices if completion fails
+set history = 1000              # keep that much in history
+set mail = (/var/mail/$USER)    # mail directory
+set mch = `hostname -s`         # hostname
+set color                       # use color in ls etc.
+#bindkey -v                      # vi keybindings
+
+#source ~/.complete.tcsh
+
+# ALIASES
+alias h		history 25
+alias j		jobs -l
+alias su	su -m
+alias d     dirs -lv
+alias cd    pushd
+
+
+# PROGRAM VARIABLES
+setenv	EDITOR	vim             # defaults to vim to edit text
+setenv	VISUAL	${EDITOR}       # use vim
+setenv	EXINIT	'set autoindent'# enable autoindent automatically
+setenv	PAGER	less            # less is more than more
+
+# OTHER GLOBAL VARIABLES
+setenv BLOCKSIZE M              # display file size in Megabytes
+
+set path = (~/bin ~/texlive/2011/bin/amd64-freebsd ~/.cabal/bin /bin /sbin /usr/{bin,sbin,X11R7/bin,X11R6/bin,pkg/{,s}bin,games} \
+	    /usr/local/{,s}bin)
+
+# EFFECTIVE PUSHD & POPD
+set cdpath = (~ ~/code ~/rpg})
+set pushdsilent
+
+if ($?prompt) then
+    #	set prompt = "%S\!%s %~% "  # prompt showing command number in reverse-video
+	set prompt = "%S\!%s %m:%/% "  # prompt showing command number in reverse-video
+endif                           # + current directory (~ for home)
+
+# LOCALE
+setenv LANG en_US.UTF-8         # defaults to UTF-8
+setenv LC_CTYPE en_US.UTF-8     # defaults to UTF-8
+
+# PROGRAMMED COMPLETION
+# mpc : complete the commands and the playlists names
+
+complete mpc \
+                'p/1/(add current del play next prev pause toggle stop clear move playlist listall lsplaylists load save rm volume repeat random single search crossfade update stats version)/' \
+                'n@load@`find ~/music/playlists -name "*.m3u" -exec basename \{\} .m3u \;`@'
+
+# cd, pushd : only offer directories
+complete {cd,pushd} 'p/1/d/'
+setenv PERL_BADLANG 0
+setenv MPD_HOST 127.0.0.1
+setenv MPD_PORT 6600
+
