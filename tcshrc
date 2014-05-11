@@ -20,6 +20,8 @@ alias su	su -m
 alias d     dirs -lv
 alias cd    pushd
 
+## perl
+alias reperl perl -de0
 
 # PROGRAM VARIABLES
 setenv	EDITOR	vim             # defaults to vim to edit text
@@ -30,8 +32,12 @@ setenv	PAGER	less            # less is more than more
 # OTHER GLOBAL VARIABLES
 setenv BLOCKSIZE M              # display file size in Megabytes
 
-set path = (~/bin ~/texlive/2011/bin/amd64-freebsd ~/.cabal/bin /bin /sbin /usr/{bin,sbin,X11R7/bin,X11R6/bin,pkg/{,s}bin,games} \
+#set path = (~/bin ~/texlive/2011/bin/amd64-freebsd ~/.cabal/bin /bin /sbin /usr/{bin,sbin,X11R7/bin,X11R6/bin,pkg/{,s}bin,games} \
 	    /usr/local/{,s}bin)
+setenv WX_ROOT_DIR "/opt/local/Library/Frameworks/wxWidgets.framework/Versions/wxWidgets/3.0"
+setenv SCALA_HOME "~/scala-2.10.3"
+
+set path = (~/bin ~/scala-2.10.3/bin ~/bin/clang-checker ~/bin/clang-checker/bin ~/bin/boostbuild/bin ~/code/shared/bin $WX_ROOT_DIR/bin $HOME/perl5/bin /Users/kafka/mongodb/mongodb-osx-x86_64-2.4.9/bin /usr/texbin/ /opt/local/{,s}bin ~/.cabal/bin /bin /sbin /usr/{bin,sbin,X11R6/bin,games} /usr/local/{,s}bin)
 
 # EFFECTIVE PUSHD & POPD
 set cdpath = (~ ~/code ~/rpg})
@@ -43,19 +49,46 @@ if ($?prompt) then
 endif                           # + current directory (~ for home)
 
 # LOCALE
+#setenv LC_COLLATE C
+#setenv LC_CTYPE UTF-8
+#setenv LC_MESSAGES C
+#setenv LC_MONETARY C
+#setenv LC_NUMERIC C
+#setenv LC_TIME C
+
 setenv LANG en_US.UTF-8         # defaults to UTF-8
 setenv LC_CTYPE en_US.UTF-8     # defaults to UTF-8
 
+
 # PROGRAMMED COMPLETION
-# mpc : complete the commands and the playlists names
+# mpc: complete the commands and the playlists names
 
 complete mpc \
                 'p/1/(add current del play next prev pause toggle stop clear move playlist listall lsplaylists load save rm volume repeat random single search crossfade update stats version)/' \
                 'n@load@`find ~/music/playlists -name "*.m3u" -exec basename \{\} .m3u \;`@'
 
+# dzil: complete the commands
+complete dzil \
+    'p/1/(add authordeps build clean cover install listdeps new nop release run setup smoke test commands help)/'
+
 # cd, pushd : only offer directories
 complete {cd,pushd} 'p/1/d/'
 setenv PERL_BADLANG 0
-setenv MPD_HOST 127.0.0.1
-setenv MPD_PORT 6600
+#setenv MPD_HOST 127.0.0.1
+#setenv MPD_PORT 6600
 
+#setenv PERL_LOCAL_LIB_ROOT "$PERL_LOCAL_LIB_ROOT:/Users/kafka/perl5"
+#if($?PERL_LOCAL_LIB_ROOT) then
+#    setenv PERL_LOCAL_LIB_ROOT $PERL_LOCAL_LIB_ROOT":/Users/kafka/perl5"
+#else
+    #setenv PERL_LOCAL_LIB_ROOT /Users/kafka/perl5
+#endif
+#setenv PERL_MB_OPT "--install_base /Users/kafka/perl5"
+#setenv PERL_MM_OPT "INSTALL_BASE=/Users/kafka/perl5"
+#if($?PERL5LIB) then
+#    setenv PERL5LIB "/Users/kafka/perl5/lib/perl5:$PERL5LIB"
+#else
+#    setenv PERL5LIB /Users/kafka/perl5/lib/perl5
+#endif
+
+source ~/perl5/perlbrew/etc/cshrc
