@@ -32,8 +32,6 @@ setenv	PAGER	less            # less is more than more
 # OTHER GLOBAL VARIABLES
 setenv BLOCKSIZE M              # display file size in Megabytes
 
-#set path = (~/bin ~/texlive/2011/bin/amd64-freebsd ~/.cabal/bin /bin /sbin /usr/{bin,sbin,X11R7/bin,X11R6/bin,pkg/{,s}bin,games} \
-	    /usr/local/{,s}bin)
 setenv WX_ROOT_DIR "/opt/local/Library/Frameworks/wxWidgets.framework/Versions/wxWidgets/3.0"
 setenv SCALA_HOME "~/scala-2.10.3"
 
@@ -49,16 +47,8 @@ if ($?prompt) then
 endif                           # + current directory (~ for home)
 
 # LOCALE
-#setenv LC_COLLATE C
-#setenv LC_CTYPE UTF-8
-#setenv LC_MESSAGES C
-#setenv LC_MONETARY C
-#setenv LC_NUMERIC C
-#setenv LC_TIME C
-
 setenv LANG en_US.UTF-8         # defaults to UTF-8
 setenv LC_CTYPE en_US.UTF-8     # defaults to UTF-8
-
 
 # PROGRAMMED COMPLETION
 # mpc: complete the commands and the playlists names
@@ -76,19 +66,5 @@ complete {cd,pushd} 'p/1/d/'
 setenv PERL_BADLANG 0
 #setenv MPD_HOST 127.0.0.1
 #setenv MPD_PORT 6600
-
-#setenv PERL_LOCAL_LIB_ROOT "$PERL_LOCAL_LIB_ROOT:/Users/kafka/perl5"
-#if($?PERL_LOCAL_LIB_ROOT) then
-#    setenv PERL_LOCAL_LIB_ROOT $PERL_LOCAL_LIB_ROOT":/Users/kafka/perl5"
-#else
-    #setenv PERL_LOCAL_LIB_ROOT /Users/kafka/perl5
-#endif
-#setenv PERL_MB_OPT "--install_base /Users/kafka/perl5"
-#setenv PERL_MM_OPT "INSTALL_BASE=/Users/kafka/perl5"
-#if($?PERL5LIB) then
-#    setenv PERL5LIB "/Users/kafka/perl5/lib/perl5:$PERL5LIB"
-#else
-#    setenv PERL5LIB /Users/kafka/perl5/lib/perl5
-#endif
 
 source ~/perl5/perlbrew/etc/cshrc
