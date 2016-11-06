@@ -57,9 +57,15 @@ complete dzil \
 # git: complete the commands
 complete git \
     'p/1/(branch commit config pull push status)/'
+
+# perlbrew
+complete perlbrew \
+    'p/1/(available init install list switch use)/'
     
 # cd, pushd : only offer directories
 complete {cd,pushd} 'p/1/d/'
+
+# Some environment variables
 setenv PERL_BADLANG 0
 setenv MPD_HOST 127.0.0.1
 setenv MPD_PORT 6600
