@@ -2,7 +2,7 @@
 # inspired from http://rubenschade.com/dotfiles/.tcshrc
 # and from "Using csh & tcsh", O'Reilly
 
-# GENERAL SETUP
+# General setup
 set filec                       # file completion
 set autolist ambiguous          # show choices if completion fails
 set history = 1000              # keep that much in history
@@ -10,28 +10,29 @@ set mail = (/var/mail/$USER)    # mail directory
 set mch = `hostname -s`         # hostname
 set color                       # use color in ls etc.
 
-# ALIASES
+# Aliases
 alias h	    history 25
 alias j	    jobs -l
 alias su    su -m
 alias d     dirs -lv
 alias cd    pushd
+alias shelve scp !* server:/path
 
-## perl
-alias reperl perl -de0
 
-# PROGRAM VARIABLES
-setenv	EDITOR	ec             # defaults to emacsclient script to edit text
-setenv	VISUAL	${EDITOR}       # use vim
+# Main variables
+setenv	EDITOR	ec              # defaults to emacsclient script to edit text
+setenv	VISUAL	${EDITOR}       # use emacs
 setenv	EXINIT	'set autoindent'# enable autoindent automatically
 setenv	PAGER	less            # less is more than more
 
-# OTHER GLOBAL VARIABLES
+# Other global variables
 setenv BLOCKSIZE M              # display file size in Megabytes
 
+# Path and path manipulation
 set path = (~/bin $HOME/perl5/bin /opt/local/{,s}bin ~/.cabal/bin /bin /sbin /usr/{bin,sbin,games} /usr/local/{,s}bin)
 
-# EFFECTIVE PUSHD & POPD
+# Navigation
+
 set cdpath = (~ ~/code})
 set pushdsilent
 
@@ -39,38 +40,18 @@ if ($?prompt) then
 	set prompt = "%S\!%s %m:%/% "  # prompt showing command number in reverse-video
 endif                           # + current directory (~ for home)
 
-# LOCALE
-setenv LANG en_US.UTF-8         # defaults to UTF-8
-setenv LC_CTYPE en_US.UTF-8     # defaults to UTF-8
-
-# PROGRAMMED COMPLETION
-# mpc: complete the commands and the playlists names
-
-complete mpc \
-                'p/1/(add current del play next prev pause toggle stop clear move playlist listall lsplaylists load save rm volume repeat random single search crossfade update stats version)/' \
-                'n@load@`find ~/music/playlists -name "*.m3u" -exec basename \{\} .m3u \;`@'
-
-# dzil: complete the commands
-complete dzil \
-    'p/1/(add authordeps build clean cover install listdeps new nop release run setup smoke test commands help)/'
-
-# git: complete the commands
-complete git \
-    'p/1/(branch commit config pull push status)/'
-
-# perlbrew
-complete perlbrew \
-    'p/1/(available init install list switch use)/'
-    
 # cd, pushd : only offer directories
 complete {cd,pushd} 'p/1/d/'
 
-# Some environment variables
-setenv PERL_BADLANG 0
-setenv MPD_HOST 127.0.0.1
-setenv MPD_PORT 6600
+# Locale
+setenv LANG en_US.UTF-8         # defaults to UTF-8
+setenv LC_CTYPE en_US.UTF-8     # defaults to UTF-8
 
-if ( -f ~/perl5/perlbrew/etc/cshrc ) then
-    source ~/perl5/perlbrew/etc/cshrc
-endif
+# Completion
+
+# Source modular configuration
+source ~/.tcsh.d/perl.tcsh
+source ~/.tcsh.d/git.tcsh
+# source ~/.tcsh.d/mpd.tcsh
+
     
